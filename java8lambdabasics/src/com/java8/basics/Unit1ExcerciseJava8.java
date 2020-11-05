@@ -3,6 +3,8 @@ package com.java8.basics;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 
 public class Unit1ExcerciseJava8 {
 
@@ -30,16 +32,30 @@ public class Unit1ExcerciseJava8 {
 		//Equivalent to printAll()
 		System.out.println("\n");
 		printAllWithCondition(people, p -> true);
+		
+		//We want that the behavior is also transferred when condition is met.
+		//We use two std function interfaces - Predicate for Condition and Consumer for behavior.
+		System.out.println("\n");
+		performConditionally(people, p -> p.getAge() >= 30, p -> System.out.println(p));
 	}
 
-	private static void printAllWithCondition(List<Person> people, ConditionLambda condition) {
+	private static void printAllWithCondition(List<Person> people, Predicate<Person> condition) {
 		for (Person person : people) {
 			if (condition.test(person)) {
 				System.out.println(person);
 			}
 		}		
 	}
-
+	
+	
+	private static void performConditionally(List<Person> people, Predicate<Person> condition, Consumer<Person> consumer) {
+		for (Person person : people) {
+			if (condition.test(person)) {
+				consumer.accept(person);
+			}
+		}		
+	}
+	
 	private static void printAll(List<Person> people) {
 		for (Person person : people) {
 			System.out.println(person);
